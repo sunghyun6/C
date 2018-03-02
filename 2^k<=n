@@ -1,0 +1,27 @@
+#include<stdio.h>
+unsigned long long TwoPower(int);
+
+int main()
+{
+	int num;
+	int input = 0;
+	printf("enter the integer: ");
+	scanf_s("%d", &num);
+	while (1)
+	{
+		if ((TwoPower(input) <= num)&&(TwoPower(input + 1) > num))
+			break;
+		input++;
+	}
+	printf("The Maximum Integer which satisfies 2^k<%d is %d\n", num, input);
+	return 0;
+}
+unsigned long long TwoPower(int input)
+{
+	unsigned long long result = 1;
+	for (int i = 0; i < input; i++)
+	{
+		result *= 2;
+	}
+	return result;
+}
