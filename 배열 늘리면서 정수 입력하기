@@ -1,0 +1,26 @@
+#include<stdio.h>
+#include<Stdlib.h>
+
+int main()
+{
+	int i = 0;
+	int max = 5;
+	int * arr = (int *)malloc(sizeof(int) * max);
+	while (1)
+	{
+		printf("정수를 마음대로 입력하세요(출구는 -1): ");
+		scanf_s("%d", &arr[i]);
+		if (arr[i] == -1)
+			break;
+		i++;
+		if (i == max)
+		{
+			max = max + 3;
+			arr = (int *)realloc(arr, sizeof(int)*max);
+		}
+	}
+	for (int j = 0; j < i; j++)
+		printf("%d 번째 정수는 %d입니다\n", j, arr[j]);
+	free(arr);
+	return 0;
+}
