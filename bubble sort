@@ -1,0 +1,44 @@
+#include<stdio.h>
+#include<stdlib.h>
+void EnterTheNumber(int *arr, int len);
+void BubbleSort(int *arr, int len);
+
+int main()
+{
+	int SizeOfArr;
+	int *arr;
+
+	printf("정렬하고 싶은 숫자의 수를 입력하세요: ");
+	scanf_s("%d", &SizeOfArr);
+	printf("%d", SizeOfArr);
+
+	arr = (int *)malloc(sizeof(int) * SizeOfArr);
+	EnterTheNumber(arr, SizeOfArr);
+	BubbleSort(arr, SizeOfArr);
+	for (int i = 0; i < SizeOfArr; i++)
+		printf("%d ", arr[i]);
+	printf("\n");
+	free(arr);
+	return 0;
+}
+void EnterTheNumber(int *arr, int len)
+{
+	for (int i = 0; i < len; i++)
+	{
+		printf("정렬하고 싶은 %d번째 숫자를 입력하세요: ", i + 1);
+		scanf_s("%d", &arr[i]);
+	}
+}
+void BubbleSort(int *arr, int len)
+{
+	int i, j;
+	int temp;
+	for (i = 0; i < len; i++)
+		for (j = 0; j < len - i; j++)
+			if (arr[i] < arr[i + j])
+			{
+				temp = arr[i];
+				arr[i] = arr[i+j];
+				arr[i+j] = temp;
+			}
+}
