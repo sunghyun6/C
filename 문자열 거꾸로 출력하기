@@ -1,0 +1,27 @@
+#include<stdio.h>
+#include<string.h>
+#include<Stdlib.h>
+
+int main()
+{
+	int length, len;
+	printf("문자열의 길이를 입력하세요: ");
+	scanf_s("%d", &length);
+	getchar();
+	char *arr = (char *)malloc(sizeof(char)*(length+2));
+	printf("문자열을 입력하세요: ");
+	fgets(arr, length+2, stdin);
+	arr[strlen(arr) - 1] = 0;
+	len = strlen(arr);
+	for (int i = len; i > 0; i--) //0일때는 뒤에 24번째줄에서 처리함.
+	{
+		if (arr[i] == ' ')
+		{
+			printf("%s ", &arr[i + 1]); //이렇게 하면 인덱스값 뒤로부터 프린트됨
+			arr[i] = 0; //널문자로 초기화해서 다음 프린트때 포함이 안됨
+		}
+	}	
+	printf("%s\n", &arr[0]); //다음 띄어쓰기가 처음엔 대부분 없으므로 한번더 해준다
+	free(arr);
+	return 0;
+}
