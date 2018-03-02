@@ -1,0 +1,44 @@
+#include<stdio.h>
+
+typedef struct point
+{
+	int xpos;
+	int ypos;
+} Point;
+typedef struct rectangle
+{
+	Point leftAbove;
+	Point rightDown;
+} Rectangle;
+void getArea(Rectangle rectangle1);
+void getPoint(Rectangle rectangle1);
+int abs(int a);
+int main()
+{
+	Rectangle rectangle1 = { { 0,0 },{ 100,100 } };
+	getArea(rectangle1);
+	getPoint(rectangle1);
+	return 0;
+}
+void getArea(Rectangle rectangle1)
+{
+	int width=abs(rectangle1.leftAbove.xpos - rectangle1.rightDown.xpos);
+	int height = abs(rectangle1.leftAbove.ypos - rectangle1.rightDown.ypos);
+	printf("Area of Rectangle is %d\n", width*height);
+}
+void getPoint(Rectangle rectangle1)
+{
+	Point pos1 = { rectangle1.leftAbove.xpos,rectangle1.rightDown.ypos };
+	Point pos2 = { rectangle1.rightDown.xpos,rectangle1.leftAbove.ypos };
+	printf("첫번쨰 점:[%d, %d]\n", rectangle1.leftAbove.xpos, rectangle1.leftAbove.ypos);
+	printf("두번째 점:[%d, %d]\n", pos1.xpos, pos1.ypos);
+	printf("세번째 점:[%d, %d]\n", rectangle1.rightDown.xpos, rectangle1.rightDown.ypos);
+	printf("네번째 점:[%d, %d]\n", pos2.xpos, pos2.ypos);
+}
+int abs(int a)
+{
+	if (a < 0)
+		return -a;
+	else
+		return a;
+}
