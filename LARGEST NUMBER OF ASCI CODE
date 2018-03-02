@@ -1,0 +1,19 @@
+#include<stdio.h>
+
+int main()
+{
+	char voca[100];
+	int ASCI;
+	int len = 0;
+
+	printf("Enter the voca: ");
+	scanf_s("%s", voca, sizeof(voca));
+	while (voca[len] != '\0')
+		len++;
+	ASCI = voca[0];
+	for (int i = 0; i < len; i++)
+		if (ASCI < voca[i])
+			ASCI = voca[i];
+	printf("HIGHEST ASCI CODE OF VOCA IS %c\n", ASCI);
+	return 0;
+}
