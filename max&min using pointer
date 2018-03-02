@@ -1,0 +1,31 @@
+#include<stdio.h>
+
+void function1(int *arr,int size,int **dp1,int **dp2);
+
+int main()
+{
+	int arr[5];
+	int *maxPtr;
+	int *minPtr;
+
+	for (int i = 0; i < 5; i++)
+	{
+		printf("Enter the integer: ");
+		scanf_s("%d", &arr[i]);
+	}
+	function1(arr,5,&maxPtr,&minPtr);
+	printf("%d is maximum and %d is minimum\n",*maxPtr,*minPtr);
+	return 0;
+}
+void function1(int *arr,int size,int **dp1,int **dp2)
+{
+	*dp1 = arr;
+	*dp2 = arr;
+	for (int i = 1; i < size; i++)
+	{
+		if (**dp1< arr[i])
+			*dp1 = (arr + i);
+		if (**dp2> arr[i])
+			*dp2 = (arr + i);
+	}
+}
