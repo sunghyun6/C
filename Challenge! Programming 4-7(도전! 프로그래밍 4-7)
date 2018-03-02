@@ -1,0 +1,167 @@
+##분리해서사용하세요
+
+#include<stdio.h>
+#include"file.h"
+int main()
+{
+	intro();
+	return 0;
+}
+
+#include<stdio.h>
+#include"file.h"
+#include"data.h"
+void intro() //file for intro
+{
+	FILE *fp;
+	errno_t err;
+	err = fopen_s(&fp, "data.txt", "rt");
+	Data data[100];
+	int order = 0;
+	while (fgets(data[order].name,10,fp)) //reading data from file
+	{
+		fgets(data[order].number, 20, fp);
+		order++;
+	}
+	fclose(fp); //close file
+	err = fopen_s(&fp, "data.txt", "wt"); //reopen the file for writing 
+	while (1)
+	{
+		int i;
+		puts("*****MENU*****");
+		puts("1. Insert");
+		puts("2. Delete");
+		puts("3. Search");
+		puts("4. Print All");
+		puts("5. Exit");
+		fputs("Chooses the item: ",stdout);
+		scanf_s("%d", &i);
+		getchar();
+		switch (i)
+		{
+		case 1:
+			Insert(data, order);
+			order++;
+			continue;
+		case 2:
+			Delete(data, order);
+			continue;
+		case 3:
+			Search(data, order);
+			continue;
+		case 4:
+			PrintAll(data, order);
+			continue;
+		case 5:
+			break;
+		default:
+			puts("wrong input, please enter valid input");
+			continue;
+		}
+		break;
+	}
+	save(fp, data, order);
+	fclose(fp);
+}
+
+#include<stdio.h>
+#include"data.h"
+void Insert(Data *data, int order) //function for insert
+{
+	puts("[INSERT]");
+	fputs("Input Name:", stdout);
+	fgets(data[order].name, 10, stdin);
+	fputs("Input Tel Number:", stdout);
+	fgets(data[order].number, 20, stdin);
+	puts("					Data Inserted");
+
+}
+
+#include<stdio.h>
+#include"data.h"
+#include<string.h>
+void Delete(Data *data, int order) //function for delete
+{
+	char search[10];
+	puts("[DELETE]");
+	fputs("Input Name:", stdout);
+	fgets(search, 10,stdin);
+	for (int i = 0; i < order; i++)
+	{
+		if (!strcmp(search, data[i].name))
+		{
+			printf("Name:%sTel:%s", data[i].name, data[i].number);
+			data[i].name[0] = 0;
+			data[i].number[0] = 0;
+			printf("Deleted\n");
+			return;
+		}
+	}
+	printf("NO data for this input\n");
+}
+
+#include<stdio.h>
+#include"data.h"
+#include<string.h>
+void Search(Data *data, int order) //function for search
+{
+	char search[10];
+	puts("[SEARCH]");
+	fputs("Input Name:", stdout);
+	fgets(search, 10,stdin);
+	for (int i = 0; i < order; i++)
+	{
+		if (!strcmp(search, data[i].name))
+		{
+			printf("Tel:%s", data[i].number);
+			return;
+		}
+	}
+	printf("NO data for this input\n");
+}
+
+#include<stdio.h>
+#include"data.h"
+void PrintAll(Data *data, int order) //function for print
+{
+	puts("[Print All Data]");
+	for (int i = 0; i < order; i++)
+	{
+		if (data[i].name[0] == 0)
+			continue;
+		printf("Name:%s", data[i].name);
+		printf("Tel:%s", data[i].number);
+	}
+}
+
+#include<stdio.h>
+#include"data.h"
+
+void save(FILE * fp,Data *data,int order) //function for save data
+{
+	for (int i = 0; i < order; i++)
+	{
+		fputs(data[i].name, fp);
+		fputs(data[i].number, fp);
+	}
+}
+
+#ifndef __FILE_H__ //header for function
+#define __FILE_H__
+#include"data.h"
+void intro();
+void Insert(Data *data, int order);
+void PrintAll(Data *data, int order);
+void Search(Data *data, int order);
+void Delete(Data *data, int order);
+void save(FILE * fp, Data *data, int order);
+#endif
+
+#ifndef __DATA_H__ //header for struct
+#define __DATA_H__
+typedef struct
+{
+	char name[10];
+	char number[20];
+}Data;
+#endif
