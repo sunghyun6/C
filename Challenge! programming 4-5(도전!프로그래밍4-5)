@@ -1,0 +1,31 @@
+#include<stdio.h>
+void compare(FILE *text1, FILE *text2);
+int main(int argc,char *argv[])
+{
+	FILE *text1;
+	FILE *text2;
+	errno_t err1, err2;
+	err1 = fopen_s(&text1, argv[1], "rt");
+	err2 = fopen_s(&text2, argv[2], "rt");
+	compare(text1, text2);
+	return 0;
+}
+void compare(FILE *text1, FILE *text2)
+{
+	char ch1, ch2;
+	while (1)
+	{
+		ch1 = fgetc(text1);
+		ch2 = fgetc(text2);
+		if (ch1 != ch2)
+		{
+			printf("two files are different each other\n");
+			break;
+		}
+		if (ch1 == EOF && ch2 == EOF)
+		{
+			printf("two files are exactly same\n");
+			break;
+		}
+	}
+}
