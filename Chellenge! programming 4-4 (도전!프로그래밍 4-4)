@@ -1,0 +1,39 @@
+#include<stdio.h>
+void checkWord(char *word, int *numA, int *numP);
+int main(int argc,char *argv[])
+{
+	FILE *fp;
+	errno_t err;
+	char word[100];
+	int numA = 0, numP = 0;
+	err=fopen_s(&fp,argv[1], "rt");
+	while (fgets(word, sizeof(word), fp) != NULL) //do until end of the file
+		checkWord(word, &numA, &numP);
+	if (feof(fp) != 0) //check it's failed or not
+	{
+		puts("completed");
+		printf("the number of word starting with A is :%d\n", numA);
+		printf("the number of word starting with P is: %d\n", numP);
+	}
+	else
+		puts("failed");
+	fclose(fp);
+	return 0;
+}
+void checkWord(char *word, int * numA, int * numP)
+{
+	if ((word[0] == 'a') || (word[0] == 'A'))
+		(*numA)++;
+	else if((word[0] == 'p') || (word[0] == 'P'))
+		(*numP)++;
+	for (int i = 0; i < 100; i++)
+	{
+		if ((word[i] == 0)) //endofthefile, break
+			break;
+		if ((word[i] == ' ') || (word[i] == '\t')) //space or tab, check again
+		{
+			checkWord(&word[i + 1], numA, numP);
+			break;
+		}
+	}
+}
