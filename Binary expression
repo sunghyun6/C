@@ -1,0 +1,43 @@
+#include<stdio.h>
+void DigitToBinary(int num,int *binary);
+int pow(int num);
+
+int main()
+{
+	int num, binary[32], index;
+	printf("enter the number: ");
+	scanf_s("%d", &num);
+	DigitToBinary(num,binary);
+	for (int i = 32; i > 0; i--)
+		if (binary[32 - i] == 1)
+		{
+			index = 32 - i;
+			break;
+		}
+	for (int i = index; i < 32; i++)
+		printf("%d", binary[i]);
+	printf("is binary expression\n");
+	return 0;
+}
+void DigitToBinary(int num,int *binary)
+{
+	for (int i = 30; i >= 0; i--)
+	{
+		if (pow(i) <= num)
+		{
+			num = num - (pow(i));
+			binary[31 - i] = 1;
+		
+		}
+		else
+			binary[31 - i] = 0;
+	}
+
+}
+int pow(int num)
+{
+	int result = 1;
+	for (int i = 0; i< num; i++)
+		result *=2;
+	return result;
+}
