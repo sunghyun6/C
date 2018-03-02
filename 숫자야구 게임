@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+void createNumber(int *computer);
+
+int main()
+{
+	int computer[3];
+	int player[3];
+	int try = 0;
+	srand((unsigned)time(NULL));
+	createNumber(computer);
+	while (1)
+	{
+		int strike = 0, ball = 0;
+		printf("3개의 숫자를 입력하세요: ");
+		scanf_s("%d %d %d", &player[0], &player[1], &player[2]);
+		for (int i = 0; i < 3; i++)
+			for (int j = 0; j < 3; j++)
+				if (player[i] == computer[j]) {
+					if (i == j)
+						strike++;
+					else
+						ball++;
+				}
+		try++;
+		printf("%dstrike, %dball\n", strike, ball);
+		if (strike == 3)
+		{
+			printf("%d 만에 성공하셨습니다\n", try);
+			break;
+		}
+	}
+	return 0;
+}
+void createNumber(int *computer)
+{
+	int i = 1;
+	computer[0] = rand() % 10;
+	computer[1] = -1, computer[2] = -1;
+	while (i < 3)
+	{
+		computer[i] = rand() % 10;
+		if ((computer[0] == computer[1])||(computer[1]==computer[2])||(computer[0]==computer[2]))
+			continue;
+		i++;
+	}
+}
