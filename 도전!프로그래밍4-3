@@ -1,0 +1,32 @@
+#include<stdio.h>
+
+typedef struct
+{
+	double real;
+	double imagine;
+}Complex;
+void add(Complex input1, Complex input2);
+void multiply(Complex input1, Complex input2);
+
+int main()
+{
+	Complex input1,input2;
+	fputs("복소수 입력1[실수 허수]:", stdout);
+	scanf_s("%lf %lf", &input1.real, &input1.imagine);
+	fputs("복소수 입력2[실수 허수]:", stdout);
+	scanf_s("%lf %lf", &input2.real, &input2.imagine);
+	add(input1, input2);
+	multiply(input1, input2);
+	return 0;
+}
+void add(Complex input1, Complex input2)
+{
+	printf("합의 결과:%lf+(%lf)i\n", input1.real + input2.real, input1.imagine + input2.imagine);
+}
+void multiply(Complex input1, Complex input2)
+{
+	double real, imagine;
+	real = input1.real*input2.real - input2.imagine*input1.imagine;
+	imagine = input1.imagine*input2.real + input1.real*input2.imagine;
+	printf("곱의 결과:%lf+(%lf)i\n", real, imagine);
+}
