@@ -1,0 +1,45 @@
+#include<stdio.h>
+void showArr(int(*arr)[100],int number);
+void snailArr(int(*arr)[100],int number,int startNumber,int start);
+
+int main()
+{
+	int arr[100][100];
+	int number;
+	printf("Enter the Number: ");
+	scanf_s("%d", &number);
+	snailArr(arr,number,1,0);
+	showArr(arr, number);
+	return 0;
+}
+void snailArr(int(*arr)[100],int number,int startNumber,int start)
+{
+	int NUM = number - 1;
+	for (int i = 0; i<number;i++) //making 3 lines
+	{
+		arr[0 + start][i + start] = i + startNumber;
+		arr[i + start][NUM + start] = i + startNumber + NUM;
+		arr[NUM + start][NUM - i + start] = i + startNumber + 2 * NUM;
+	}
+	for (int i = 0; i < NUM; i++) //making last line which is shorter than normal line
+	{
+		arr[NUM - i + start][0 + start] = i + startNumber + 3 * NUM;
+	}
+	if (number-2 < 0)
+	{
+		return 0;    //recursive exit 
+	}
+	snailArr(arr, NUM - 1, 4 * NUM + startNumber, start + 1);   //recursive call for inner ones
+	
+}
+	
+void showArr(int(*arr)[100],int number)
+{
+	for (int i = 0; i < number; i++)
+	{
+		for (int j = 0; j < number; j++)
+			printf("%2d ", arr[i][j]);
+		printf("\n");
+	}
+	printf("\n");
+}
