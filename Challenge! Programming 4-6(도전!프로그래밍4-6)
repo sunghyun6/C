@@ -1,0 +1,144 @@
+##분리해서사용하세요
+
+#include<stdio.h>
+#include"file.h"
+int main()
+{
+	intro();
+	return 0;
+}
+
+#include<stdio.h>
+#include"file.h"
+#include"data.h"
+void intro()
+{
+	Data data[100];
+	int order = 0;
+	while (1)
+	{
+		int i;
+		puts("*****MENU*****");
+		puts("1. Insert");
+		puts("2. Delete");
+		puts("3. Search");
+		puts("4. Print All");
+		puts("5. Exit");
+		puts("Chooses the item: ");
+		scanf_s("%d", &i);
+		getchar();
+		switch (i)
+		{
+		case 1:
+			Insert(data, order);
+			order++;
+			continue;
+		case 2:
+			Delete(data, order);
+			continue;
+		case 3:
+			Search(data, order);
+			continue;
+		case 4:
+			PrintAll(data, order);
+			continue;
+		case 5:
+			break;
+		default:
+			puts("wrong input, please enter valid input");
+			continue;
+		}
+		break;
+	}
+}
+
+#include<stdio.h>
+#include"data.h"
+void Insert(Data *data, int order)
+{
+	puts("[INSERT]");
+	fputs("Input Name:", stdout);
+	gets_s(data[order].name, 10);
+	fputs("Input Tel Number:", stdout);
+	gets_s(data[order].number, 20);
+	puts("					Data Inserted");
+
+}
+
+#include<stdio.h>
+#include"data.h"
+#include<string.h>
+void Delete(Data *data, int order)
+{
+	char search[10];
+	puts("[DELETE]");
+	fputs("Input Name:", stdout);
+	gets_s(search, 10);
+	for (int i = 0; i < order; i++)
+	{
+		if (!strcmp(search, data[i].name))
+		{
+			printf("Name:%s	Tel:%s\n", data[i].name, data[i].number);
+			data[i].name[0] = 0;
+			printf("Deleted\n");
+			return;
+		}
+	}
+	printf("NO data for this input\n");
+}
+
+#include<stdio.h>
+#include"data.h"
+#include<string.h>
+void Search(Data *data, int order)
+{
+	char search[10];
+	puts("[SEARCH]");
+	fputs("Input Name:", stdout);
+	gets_s(search, 10);
+	for (int i = 0; i < order; i++)
+	{
+		if (!strcmp(search, data[i].name))
+		{
+			printf("Tel:%s\n", data[i].number);
+			return;
+		}
+	}
+	printf("NO data for this input\n");
+}
+
+#include<stdio.h>
+#include"data.h"
+void PrintAll(Data *data, int order)
+{
+	puts("[Print All Data]");
+	for (int i = 0; i < order; i++)
+	{
+		if (data[i].name[0] == 0)
+			i++;
+		if (i == order)
+			break;
+		printf("Name:%s		", data[i].name);
+		printf("Tel:%s\n", data[i].number);
+	}
+}
+
+#pragma once
+#ifndef __DATA_H__
+#define __DATA_H__
+typedef struct
+{
+	char name[10];
+	char number[20];
+}Data;
+#endif
+
+#ifndef __FILE_H__
+#define __FILE_H__
+#include"data.h"
+void intro();
+void Insert(Data *data, int order);
+void PrintAll(Data *data, int order);
+void Search(Data *data, int order);
+void Delete(Data *data, int order);
+#endif
